@@ -1,16 +1,16 @@
 const express = require("express");
+const dotenv = require("dotenv");
 
 const numberRouter = require("./routes/numbers");
 
-const app = express();
+dotenv.config();
 
-// Conection port
-const PORT = 3500;
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use("/", numberRouter);
 
-app.listen(PORT, () =>{
+app.listen(process.env.PORT, () =>{
     console.log(`Server ready on http://localhost:${PORT}`);
 });
