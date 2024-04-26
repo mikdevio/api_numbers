@@ -3,7 +3,12 @@ const numberModel = require("../models/numbers");
 
 // Callback for GET numbers list from server
 exports.getData = (req, res) => {
-    res.status(200).send({message:"ok GET", numbers: numberModel.numbers.sort()});
+    let copiedArray = Array.from(numberModel.numbers);
+
+    res.status(200).send({
+        message:"ok GET", 
+        numbers: copiedArray.sort(),
+    });
 };
 
 exports.postData = (req, res) => {
@@ -11,7 +16,6 @@ exports.postData = (req, res) => {
     // numbers from client
     const { numbers } = req.body;
     console.log(numbers);
-    console.log(typeof numbers);
 
     if(!Array.isArray(numbers)){
         throw new Error("Numbers should be in an array.");
@@ -23,7 +27,6 @@ exports.postData = (req, res) => {
 
     numbers.forEach(number => {
         if(typeof number != "number"){
-            console.log(number);
             throw new Error("All array elements must be a number.")
         }
     });
